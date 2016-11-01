@@ -1,6 +1,9 @@
 package cooksys.controller;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +21,7 @@ import cooksys.calmDown.Message;
 @RequestMapping("message")
 public class MessageController {
 
+	private Map<String, Set<String>> messages = new HashMap<>();
 	Message message;
 	HalfBakedIdea halfBaked;
 
@@ -69,14 +73,18 @@ public class MessageController {
 	}
 	
 	@GetMapping("/user/{username}")
-	public String getFirstCharacterOfUserName(@PathVariable String username ) {
-		return username.substring(0, 1);
+	public Set<String> getMessages(@PathVariable String username ) {
+		return messages.get(username);
 	}
 	
 	@PutMapping("/user/{username}")
-	public String putDataToUser(@PathVariable String username, @RequestBody DataTransferObject msg) {
-		return username + " got a message containing " + msg.getValue() + "!";
+	public String UserData(@RequestBody Map<String, String> username) {
+		messages.containsKey(username);
+		Set<String> multipleMessages = new HashSet<>();
+		multipleMessages.put(username, messages);
 	}
+	
+	
 
 	/**
 	 * Add a new method here! This method will cause postman to respond with the
