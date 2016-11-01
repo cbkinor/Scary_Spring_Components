@@ -72,20 +72,22 @@ public class MessageController {
 		return message.getMessage().length();
 	}
 	
-	@GetMapping("/user/{username}")
-	public Set<String> getMessages(@PathVariable String username ) {
-		return messages.get(username);
+	@GetMapping("users/{username}")
+	public Set<String> getMessages(@PathVariable String username) {
+		return messages.remove(username);
 	}
-	
-	@PutMapping("/user/{username}")
-	public String UserData(@RequestBody Map<String, String> username) {
-		messages.containsKey(username);
-		Set<String> multipleMessages = new HashSet<>();
-		multipleMessages.put(username, messages);
-	}
-	
-	
 
+	@PostMapping("users/{username}")
+	public void setMessages(@PathVariable String username, @RequestBody DataTransferObject msg) {
+		if (!messages.containsKey(username)){
+			Set<String> mess = new HashSet<>();
+			mess.add(msg.getValue());
+			messages.put(username,mess);
+		} else {
+			messages.get(username).add(msg.getValue());
+		}
+	}
+	
 	/**
 	 * Add a new method here! This method will cause postman to respond with the
 	 * total number of actions taken by the system (see @HalfBakedIdea) when a

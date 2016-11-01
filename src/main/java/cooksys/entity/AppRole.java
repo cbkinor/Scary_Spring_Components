@@ -3,14 +3,15 @@ package cooksys.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "app_role")
+@Table(name = "app_role") //do not need anything after @Table
 public class AppRole {
 
+	//will be in every class
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "role")
+    @Column(name = "role")  //do not need anything after @Column
     private String role;
 
     public long getId() {
